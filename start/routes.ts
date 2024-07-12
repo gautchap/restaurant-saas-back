@@ -8,9 +8,21 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import AutoSwagger from 'adonis-autoswagger'
+import swagger from '#config/swagger'
+const AuthController = () => import('#controllers/auth_controller')
+const ItemsController = () => import('#controllers/items_controller')
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
+router.post('auth/signup', [AuthController, 'signUp'])
+router.get('auth/me', [AuthController, 'getInfos'])
+
+router.get('items/get', [ItemsController, 'getItems'])
+router.put('items/update', [ItemsController, 'updateItems'])
+router.delete('items/delete', [ItemsController, 'deleteItem'])
+
+router.get('/swagger', async () => {
+  return AutoSwagger.default.docs(router.toJSON(), swagger)
+})
+router.get('/docs', async () => {
+  return AutoSwagger.default.ui('/swagger', swagger)
 })
