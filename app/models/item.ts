@@ -11,7 +11,7 @@ export default class Item extends BaseModel {
   declare id: string
 
   @column()
-  declare userId: number
+  declare userId: string
 
   @column()
   declare type: string

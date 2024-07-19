@@ -1,12 +1,15 @@
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Item from '#models/item'
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, column, hasMany } from '@adonisjs/lucid/orm'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import { randomUUID } from 'node:crypto'
 
 export default class User extends BaseModel {
+  static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare name: string | null
@@ -30,4 +33,9 @@ export default class User extends BaseModel {
 
   @hasMany(() => Item, { foreignKey: 'userId' })
   declare items: HasMany<typeof Item>
+
+  @beforeCreate()
+  static assignUuid(user: User) {
+    user.id = randomUUID()
+  }
 }
