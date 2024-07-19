@@ -6,3 +6,9 @@ export const createUserValidator = vine.compile(
     email: vine.string().trim().email(),
   })
 )
+
+export const readUserValidator = vine.compile(
+  vine.object({
+    id: vine.string().uuid().trim().minLength(1),
+  })
+)

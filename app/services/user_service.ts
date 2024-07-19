@@ -13,4 +13,9 @@ export default class UserService {
     const token = await User.accessTokens.create(user)
     return { user, accessToken: token.value!.release() }
   }
+
+  async userExist(id: string) {
+    const user = await User.find(id)
+    return user
+  }
 }

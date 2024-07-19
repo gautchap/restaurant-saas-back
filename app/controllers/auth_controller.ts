@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { createUserValidator } from '#validators/auth_validator'
+import { createUserValidator, readUserValidator } from '#validators/auth_validator'
 import { inject } from '@adonisjs/core'
 import UserService from '#services/user_service'
 
@@ -18,5 +18,12 @@ export default class AuthController {
     if (user) return user
 
     return 'No user found'
+  }
+  async userExist({ request }: HttpContext) {
+    const data = request.all()
+    const payload = await readUserValidator.validate(data)
+
+    const user = await this.userService.userExist(payload.id)
+    return user
   }
 }

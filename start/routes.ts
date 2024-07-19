@@ -15,6 +15,7 @@ const ItemsController = () => import('#controllers/items_controller')
 
 router.post('auth/signup', [AuthController, 'signUp'])
 router.get('auth/me', [AuthController, 'getInfos'])
+router.post('auth/exist', [AuthController, 'userExist'])
 
 router.get('items/get', [ItemsController, 'getItems'])
 router.put('items/update', [ItemsController, 'updateItems'])
