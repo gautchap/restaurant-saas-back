@@ -12,6 +12,8 @@ export default class extends BaseSchema {
       table.string('shape')
       table.integer('x')
       table.integer('y')
+      table.integer('table_number')
+      table.integer('chair_amount')
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

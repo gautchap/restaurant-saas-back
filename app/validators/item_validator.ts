@@ -17,6 +17,8 @@ export const updateItemsValidator = vine.compile(
         shape: vine.string().trim().minLength(1),
         x: vine.number(),
         y: vine.number(),
+        tableNumber: vine.number(),
+        chairAmount: vine.number(),
       })
     ),
   })

@@ -28,6 +28,12 @@ export default class Item extends BaseModel {
   @column()
   declare y: number
 
+  @column()
+  declare tableNumber: number
+
+  @column()
+  declare chairAmount: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
