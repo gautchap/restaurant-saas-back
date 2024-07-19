@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.integer('x')
       table.integer('y')
       table.integer('table_number')
-      table.integer('chair_amount')
+      table.specificType('chair_pos', 'integer ARRAY')
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

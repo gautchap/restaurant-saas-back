@@ -32,7 +32,7 @@ export default class Item extends BaseModel {
   declare tableNumber: number
 
   @column()
-  declare chairAmount: number
+  declare chairPos: number[]
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
