@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import AutoSwagger from 'adonis-autoswagger'
 import swagger from '#config/swagger'
+const BookingsController = () => import('#controllers/bookings_controller')
 const AuthController = () => import('#controllers/auth_controller')
 const ItemsController = () => import('#controllers/items_controller')
 
@@ -20,6 +21,8 @@ router.post('auth/exist', [AuthController, 'userExist'])
 router.get('items/get', [ItemsController, 'getItems'])
 router.put('items/update', [ItemsController, 'updateItems'])
 router.delete('items/delete', [ItemsController, 'deleteItem'])
+
+router.post('booking', [BookingsController, 'postBooking'])
 
 router.get('/swagger', async () => {
   return AutoSwagger.default.docs(router.toJSON(), swagger)
