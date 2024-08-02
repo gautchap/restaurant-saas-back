@@ -22,7 +22,8 @@ router.get('items/get', [ItemsController, 'getItems'])
 router.put('items/update', [ItemsController, 'updateItems'])
 router.delete('items/delete', [ItemsController, 'deleteItem'])
 
-router.post('booking', [BookingsController, 'postBooking'])
+router.post('bookings/create', [BookingsController, 'createBooking'])
+router.get('bookings/get', [BookingsController, 'getBookings'])
 
 router.get('/swagger', async () => {
   return AutoSwagger.default.docs(router.toJSON(), swagger)

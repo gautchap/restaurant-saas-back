@@ -4,6 +4,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column, hasMany } from '@adonisjs/lucid/orm'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { randomUUID } from 'node:crypto'
+import Booking from '#models/booking'
 
 export default class User extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -33,6 +34,9 @@ export default class User extends BaseModel {
 
   @hasMany(() => Item, { foreignKey: 'userId' })
   declare items: HasMany<typeof Item>
+
+  @hasMany(() => Booking, { foreignKey: 'userId' })
+  declare bookings: HasMany<typeof Booking>
 
   @beforeCreate()
   static assignUuid(user: User) {

@@ -1,5 +1,11 @@
 import vine from '@vinejs/vine'
 
+export const getBookingsValidator = vine.compile(
+  vine.object({
+    userId: vine.string().uuid().trim().minLength(1),
+  })
+)
+
 export const createBookingValidator = vine.compile(
   vine.object({
     booking: vine.object({
