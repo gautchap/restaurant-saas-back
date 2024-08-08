@@ -14,7 +14,10 @@ export default class Booking extends BaseModel {
   declare userId: string
 
   @column()
-  declare date: Date
+  declare assigned: string | null
+
+  @column.dateTime({ autoCreate: false, autoUpdate: false })
+  declare date: DateTime
 
   @column()
   declare persons: number
@@ -27,6 +30,9 @@ export default class Booking extends BaseModel {
 
   @column()
   declare message: string | null
+
+  @column()
+  declare status: 'confirmed' | 'cancelled' | 'completed'
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
