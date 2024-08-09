@@ -11,7 +11,7 @@ export const createBookingValidator = vine.compile(
     booking: vine.object({
       userId: vine.string().uuid(),
       id: vine.string().uuid(),
-      date: vine.date({ formats: { utc: true } }),
+      date: vine.date({ formats: { utc: true, locale: 'fr' } }),
       tel: vine.string().optional(),
       persons: vine.number(),
       firstName: vine.string().optional(),
