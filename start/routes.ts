@@ -22,7 +22,8 @@ router.get('items/get', [ItemsController, 'getItems'])
 router.put('items/update', [ItemsController, 'updateItems'])
 router.delete('items/delete', [ItemsController, 'deleteItem'])
 
-router.post('bookings/create', [BookingsController, 'createBooking'])
+router.post('bookings/create/public', [BookingsController, 'createBookingWithoutAuth'])
+router.post('bookings/create/private', [BookingsController, 'createBookingWithAuth'])
 router.get('bookings/get', [BookingsController, 'getBookings'])
 
 router.get('/swagger', async () => {

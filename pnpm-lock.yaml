@@ -20,6 +20,9 @@ importers:
       '@adonisjs/lucid':
         specifier: ^21.1.0
         version: 21.1.0(@adonisjs/assembler@7.7.0(typescript@5.4.5))(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.4.5))(@vinejs/vine@2.1.0))(luxon@3.4.4)(pg@8.12.0)
+      '@adonisjs/transmit':
+        specifier: ^1.0.2
+        version: 1.0.2(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.4.5))(@vinejs/vine@2.1.0))
       '@vinejs/vine':
         specifier: ^2.1.0
         version: 2.1.0
@@ -254,6 +257,12 @@ packages:
     resolution: {integrity: sha512-fgDRC5I8RBKHzsJPM4rRQF/OWI0K9cNihCIf4yHdqQt3mhFqWSOUjSi4sXWykdICLiddmyBO86au7i0d0dj5vQ==}
     engines: {node: '>=18.16.0'}
 
+  '@adonisjs/transmit@1.0.2':
+    resolution: {integrity: sha512-TEGBGX9otsn23fc/Ir8VV0159FCx7LC5raHagzuu2bC3Hxh2jAw33PtXLjSxXGR0n5M/aRAfhhfkcbKxBZhboQ==}
+    engines: {node: '>=20.11.1'}
+    peerDependencies:
+      '@adonisjs/core': ^6.2.0
+
   '@adonisjs/tsconfig@1.3.0':
     resolution: {integrity: sha512-+nOykDG44b4JSAdsrTdh5HuZqJpr6F+dHpfNYgHfYsFJIEtZo8plHilZAM7iabCRN5R49SPv5p8Ixcp47Rr50g==}
 
@@ -290,6 +299,15 @@ packages:
   '@babel/highlight@7.24.7':
     resolution: {integrity: sha512-EStJpq4OuY8xYfhGVXngigBJRWxftKX9ksiGDnmlY3o7B/V7KIAc9X4oiK87uPJSc/vs5L869bem5fhZa8caZw==}
     engines: {node: '>=6.9.0'}
+
+  '@boringnode/bus@0.5.0':
+    resolution: {integrity: sha512-b0jtcAv/IgDrFz10kNJJT5+pyNTdSNxsPCudbnDe4PQ6KzfMQRQQolqFe0uotlmsVmWCBxUN5MyV06vdQ4MeRQ==}
+    engines: {node: '>=20.11.1'}
+    peerDependencies:
+      ioredis: ^5.0.0
+    peerDependenciesMeta:
+      ioredis:
+        optional: true
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -2093,6 +2111,10 @@ packages:
     resolution: {integrity: sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
+  object-hash@3.0.0:
+    resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
+    engines: {node: '>= 6'}
+
   object-inspect@1.13.2:
     resolution: {integrity: sha512-IRZSRuzJiynemAXPYtPe5BoI/RESNYR7TYm50MC5Mqbd3Jmw5y790sErYw3V6SryFJD64b74qQQs9wn5Bg/k3g==}
     engines: {node: '>= 0.4'}
@@ -3244,6 +3266,16 @@ snapshots:
       '@poppinss/colors': 4.1.3
       string-width: 7.2.0
 
+  '@adonisjs/transmit@1.0.2(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.4.5))(@vinejs/vine@2.1.0))':
+    dependencies:
+      '@adonisjs/core': 6.12.1(@adonisjs/assembler@7.7.0(typescript@5.4.5))(@vinejs/vine@2.1.0)
+      '@boringnode/bus': 0.5.0
+      '@poppinss/matchit': 3.1.2
+      '@poppinss/utils': 6.7.3
+      emittery: 1.0.3
+    transitivePeerDependencies:
+      - ioredis
+
   '@adonisjs/tsconfig@1.3.0': {}
 
   '@antfu/install-pkg@0.3.3':
@@ -3286,6 +3318,12 @@ snapshots:
       chalk: 2.4.2
       js-tokens: 4.0.0
       picocolors: 1.0.1
+
+  '@boringnode/bus@0.5.0':
+    dependencies:
+      '@paralleldrive/cuid2': 2.2.2
+      '@poppinss/utils': 6.7.3
+      object-hash: 3.0.0
 
   '@colors/colors@1.5.0':
     optional: true
@@ -5157,6 +5195,8 @@ snapshots:
   npm-run-path@5.3.0:
     dependencies:
       path-key: 4.0.0
+
+  object-hash@3.0.0: {}
 
   object-inspect@1.13.2: {}
 
