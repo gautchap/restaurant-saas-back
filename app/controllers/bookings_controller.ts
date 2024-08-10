@@ -4,7 +4,7 @@ import { createBookingValidator, getBookingsValidator } from '#validators/bookin
 import BookingService from '#services/booking_service'
 import transmit from '@adonisjs/transmit/services/main'
 import mail from '@adonisjs/mail/services/main'
-import html from '#resources/views/emails/booking_email'
+import sendBookingConfirmation from '#resources/views/emails/booking_email'
 
 @inject()
 export default class BookingsController {
@@ -16,12 +16,15 @@ export default class BookingsController {
 
     const booking = await this.bookingService.createBooking(payload.booking)
 
-    transmit.broadcast(`user/${booking.userId}/bookings`, { booking: JSON.stringify(booking) })
-
     response.status(200).send(booking)
 
+    transmit.broadcast(`user/${booking.userId}/bookings`, { booking: JSON.stringify(booking) })
+
     await mail.send((message) => {
-      message.to(booking.email).subject('Confirmation de réservation').html(html(booking))
+      message
+        .to(booking.email)
+        .subject('Confirmation de réservation')
+        .html(sendBookingConfirmation(booking))
     })
 
     return booking
