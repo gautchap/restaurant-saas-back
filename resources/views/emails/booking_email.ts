@@ -1,6 +1,6 @@
 import type Booking from '#models/booking'
 
-export default function html(booking: Booking) {
+export default function sendBookingConfirmation(booking: Booking) {
   const date = new Date(String(booking.date))
   return `
     <div>
