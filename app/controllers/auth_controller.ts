@@ -1,17 +1,62 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { createUserValidator, readUserValidator } from '#validators/auth_validator'
+import {
+  createUserMailValidator,
+  createUserValidator,
+  readUserValidator,
+  signUpConfirmationValidator,
+} from '#validators/auth_validator'
 import { inject } from '@adonisjs/core'
 import UserService from '#services/user_service'
+import mail from '@adonisjs/mail/services/main'
+import sendMailConfirmation from '#resources/views/emails/auth_email'
 
 @inject()
 export default class AuthController {
   constructor(protected userService: UserService) {}
-  async signUp({ request }: HttpContext) {
+  async signUp({ request, response }: HttpContext) {
     const data = request.all()
+
     const payload = await createUserValidator.validate(data)
 
-    const user = await this.userService.signUser({ name: payload.name, email: payload.email })
+    const user = await this.userService.signUser(payload)
+
+    response.status(200).send(user)
+
     return user
+  }
+  async sendMail({ request, response }: HttpContext) {
+    const data = request.all()
+
+    const payload = await createUserMailValidator.validate(data)
+
+    const user = await this.userService.sendUserAuthMail(payload)
+
+    response.status(200).send(user)
+
+    await mail.send((message) => {
+      message
+        .to(user.user.email)
+        .subject('Se connecter à votre compte')
+        .html(sendMailConfirmation(user.accessToken))
+    })
+
+    return user
+  }
+
+  async signUpWithToken({ request, response, auth }: HttpContext) {
+    const user = await auth.authenticate()
+    if (!user) return response.status(401).send('Unauthorized')
+
+    const data = request.all()
+
+    const payload = await signUpConfirmationValidator.validate(data)
+
+    const userConfirmed = await this.userService.signUserAuthMail({
+      token: payload.token,
+      email: user.email,
+    })
+
+    return userConfirmed
   }
   async getInfos({ auth }: HttpContext) {
     const user = await auth.authenticate()
@@ -25,5 +70,15 @@ export default class AuthController {
 
     const user = await this.userService.userExist(payload.id)
     return user
+  }
+
+  async signOutUser({ response, auth }: HttpContext) {
+    const user = await auth.authenticate()
+
+    if (!user) return response.status(401).send('Unauthorized')
+
+    const signOut = await this.userService.signOutUser({ user })
+
+    return signOut
   }
 }

@@ -15,8 +15,11 @@ const AuthController = () => import('#controllers/auth_controller')
 const ItemsController = () => import('#controllers/items_controller')
 
 router.post('auth/signup', [AuthController, 'signUp'])
+router.post('auth/send-mail', [AuthController, 'sendMail'])
+router.get('auth/signup-mail', [AuthController, 'signUpWithToken'])
 router.get('auth/me', [AuthController, 'getInfos'])
 router.post('auth/exist', [AuthController, 'userExist'])
+router.get('auth/signout', [AuthController, 'signOutUser'])
 
 router.get('items/get', [ItemsController, 'getItems'])
 router.put('items/update', [ItemsController, 'updateItems'])
