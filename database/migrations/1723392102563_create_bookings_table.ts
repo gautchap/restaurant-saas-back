@@ -16,7 +16,7 @@ export default class extends BaseSchema {
       table.enu('status', ['confirmed', 'cancelled', 'completed'], {
         useNative: true,
         enumName: 'booking_status',
-        existingType: false,
+        existingType: true,
       })
       table.timestamp('created_at')
       table.timestamp('updated_at')
