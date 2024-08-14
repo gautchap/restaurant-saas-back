@@ -1,14 +1,12 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import {
-  createUserMailValidator,
+  // createUserMailValidator,
   createUserValidator,
   readUserValidator,
   signUpConfirmationValidator,
 } from '#validators/auth_validator'
 import { inject } from '@adonisjs/core'
 import UserService from '#services/user_service'
-import mail from '@adonisjs/mail/services/main'
-import sendMailConfirmation from '#resources/views/emails/auth_email'
 
 @inject()
 export default class AuthController {
@@ -27,18 +25,11 @@ export default class AuthController {
   async sendMail({ request, response }: HttpContext) {
     const data = request.all()
 
-    const payload = await createUserMailValidator.validate(data)
+    const payload = await createUserValidator.validate(data)
 
     const user = await this.userService.sendUserAuthMail(payload)
 
     response.status(200).send(user)
-
-    await mail.send((message) => {
-      message
-        .to(user.user.email)
-        .subject('Se connecter à votre compte')
-        .html(sendMailConfirmation(user.accessToken))
-    })
 
     return user
   }
@@ -58,11 +49,11 @@ export default class AuthController {
 
     return userConfirmed
   }
-  async getInfos({ auth }: HttpContext) {
+  async getInfos({ response, auth }: HttpContext) {
     const user = await auth.authenticate()
-    if (user) return user
+    if (!user) return response.status(401).send('Unauthorized')
 
-    return 'No user found'
+    return user
   }
   async userExist({ request }: HttpContext) {
     const data = request.all()

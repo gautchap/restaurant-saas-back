@@ -4,13 +4,7 @@ export const createUserValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(1),
     email: vine.string().trim().email(),
-  })
-)
-
-export const createUserMailValidator = vine.compile(
-  vine.object({
-    email: vine.string().trim().email(),
-    name: vine.string().trim().minLength(1),
+    provider: vine.string().trim().minLength(1),
   })
 )
 
