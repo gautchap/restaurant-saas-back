@@ -18,6 +18,18 @@ export default class User extends BaseModel {
   @column()
   declare email: string
 
+  @column()
+  declare customerId: string | null
+
+  @column()
+  declare priceId: string | null
+
+  @column()
+  declare plan: 0 | 1
+
+  @column()
+  declare provider: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
