@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import ItemService from '#services/item_service'
 import { inject } from '@adonisjs/core'
 import { getItemsValidator, updateItemsValidator } from '#validators/item_validator'
+import { cache } from '#config/cache'
 
 @inject()
 export default class ItemsController {
@@ -14,7 +15,10 @@ export default class ItemsController {
     const data = request.all()
     const payload = await getItemsValidator.validate(data)
 
-    const items = await this.itemService.getItems(payload.userId)
+    const items = await cache.getOrSet(
+      `items:${payload.userId}`,
+      async () => await this.itemService.getItems(payload.userId)
+    )
 
     return items
   }
@@ -27,7 +31,10 @@ export default class ItemsController {
 
     const items = await this.itemService.updateItems(payload.items)
 
-    return items
+    response.status(200).send(items)
+
+    const cachedItems = cache.namespace('items')
+    await cachedItems.delete(user.id)
   }
 
   async deleteItem({ request, response, auth }: HttpContext) {
@@ -39,6 +46,9 @@ export default class ItemsController {
 
     const deleted = await this.itemService.deleteItem(payload.items)
 
-    return deleted
+    response.status(200).send(deleted)
+
+    const cachedItems = cache.namespace('items')
+    await cachedItems.delete(user.id)
   }
 }
