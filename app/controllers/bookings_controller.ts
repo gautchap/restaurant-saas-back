@@ -36,9 +36,9 @@ export default class BookingsController {
     const data = request.all()
     const payload = await getBookingsValidator.validate(data)
 
-    const items = await this.bookingService.getBookings(payload.userId)
+    const bookings = await this.bookingService.getBookings(payload.userId)
 
-    return items
+    return bookings
   }
 
   async createBookingWithAuth({ request, response, auth }: HttpContext) {
