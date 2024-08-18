@@ -32,6 +32,9 @@ importers:
       adonis-autoswagger:
         specifier: ^3.54.0
         version: 3.54.0
+      bentocache:
+        specifier: 1.0.0-beta.9
+        version: 1.0.0-beta.9(knex@3.1.0(pg@8.12.0))(tslib@2.6.3)
       luxon:
         specifier: ^3.4.4
         version: 3.4.4
@@ -319,6 +322,15 @@ packages:
 
   '@boringnode/bus@0.5.0':
     resolution: {integrity: sha512-b0jtcAv/IgDrFz10kNJJT5+pyNTdSNxsPCudbnDe4PQ6KzfMQRQQolqFe0uotlmsVmWCBxUN5MyV06vdQ4MeRQ==}
+    engines: {node: '>=20.11.1'}
+    peerDependencies:
+      ioredis: ^5.0.0
+    peerDependenciesMeta:
+      ioredis:
+        optional: true
+
+  '@boringnode/bus@0.6.0':
+    resolution: {integrity: sha512-i6AKHvFqRUC5KZTX7WXYcWIV8Wfnem6t5Li1Bn5oU+YXAq0zw1y09bZk9HxB2smugfcFlDgzRwpXuwC9fLTE9g==}
     engines: {node: '>=20.11.1'}
     peerDependencies:
       ioredis: ^5.0.0
@@ -881,6 +893,9 @@ packages:
     resolution: {integrity: sha512-ISvCdHdlTDlH5IpxQJIex7BWBywFWgjJSVdwst+/iQCoEYnyOaQ95+X1JGshuBjGp6nxKUy1jMgE3zPqN7fQdg==}
     hasBin: true
 
+  async-mutex@0.5.0:
+    resolution: {integrity: sha512-1A94B18jkJ3DYq284ohPxoXbfTA5HsQ7/Mf4DEhcyLx3Bz27Rh59iScbB6EPiP+B+joue6YCxcMXSbFC1tZKwA==}
+
   async-retry@1.3.3:
     resolution: {integrity: sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw==}
 
@@ -904,6 +919,26 @@ packages:
   basic-auth@2.0.1:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
     engines: {node: '>= 0.8'}
+
+  bentocache@1.0.0-beta.9:
+    resolution: {integrity: sha512-KykJ/8q20DO9FHQ7Yhqv8RlgI/jo7kgoE0EJ65w30sziNdaDSsy8gVRCOTf06m+TcoVdBu2luKH9V4xaavBAbA==}
+    peerDependencies:
+      '@aws-sdk/client-dynamodb': ^3.438.0
+      ioredis: ^5.3.2
+      knex: ^3.0.1
+      kysely: ^0.27.3
+      orchid-orm: ^1.24.0
+    peerDependenciesMeta:
+      '@aws-sdk/client-dynamodb':
+        optional: true
+      ioredis:
+        optional: true
+      knex:
+        optional: true
+      kysely:
+        optional: true
+      orchid-orm:
+        optional: true
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -996,6 +1031,10 @@ packages:
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
+
+  chunkify@5.0.0:
+    resolution: {integrity: sha512-G8dj/3/Gm+1yL4oWSdwIxihZWFlgC4V2zYtIApacI0iPIRKBHlBGOGAiDUBZgrj4H8MBA8g8fPFwnJrWF3wl7Q==}
+    engines: {node: '>=18'}
 
   ci-info@3.9.0:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
@@ -3078,6 +3117,11 @@ packages:
     resolution: {integrity: sha512-8WbVAQAUlENo1q3c3zZYuy5k9VzBQvp8AX9WOtbvyWlLM1v5JaSRmjubLjzHF4JFtptjH/5c/i95yaElvcjC0A==}
     engines: {node: '>= 0.4'}
 
+  typescript-log@2.0.0:
+    resolution: {integrity: sha512-TyW8lmURJSo0yjBovEhESpah3haDYBgsnQRocBF4MQSDJSYs/DOmhjo2cpSrGyvD9OaX++dbbonq9TkIQeA+Bw==}
+    peerDependencies:
+      tslib: ^2.0.0
+
   typescript-parser@2.6.1:
     resolution: {integrity: sha512-p4ZC10pu67KO8+WJALsJWhbAq4pRBIcP+ls8Bhl+V8KvzYQDwxw/P5hJhn3rBdLnfS5aGLflfh7WiZpN6yi+5g==}
 
@@ -3532,6 +3576,12 @@ snapshots:
       picocolors: 1.0.1
 
   '@boringnode/bus@0.5.0':
+    dependencies:
+      '@paralleldrive/cuid2': 2.2.2
+      '@poppinss/utils': 6.7.3
+      object-hash: 3.0.0
+
+  '@boringnode/bus@0.6.0':
     dependencies:
       '@paralleldrive/cuid2': 2.2.2
       '@poppinss/utils': 6.7.3
@@ -4153,6 +4203,10 @@ snapshots:
 
   astring@1.8.6: {}
 
+  async-mutex@0.5.0:
+    dependencies:
+      tslib: 2.6.3
+
   async-retry@1.3.3:
     dependencies:
       retry: 0.13.1
@@ -4172,6 +4226,21 @@ snapshots:
   basic-auth@2.0.1:
     dependencies:
       safe-buffer: 5.1.2
+
+  bentocache@1.0.0-beta.9(knex@3.1.0(pg@8.12.0))(tslib@2.6.3):
+    dependencies:
+      '@boringnode/bus': 0.6.0
+      '@poppinss/utils': 6.7.3
+      async-mutex: 0.5.0
+      chunkify: 5.0.0
+      hexoid: 1.0.0
+      lru-cache: 10.4.0
+      p-timeout: 6.1.2
+      typescript-log: 2.0.0(tslib@2.6.3)
+    optionalDependencies:
+      knex: 3.1.0(pg@8.12.0)
+    transitivePeerDependencies:
+      - tslib
 
   binary-extensions@2.3.0: {}
 
@@ -4292,6 +4361,8 @@ snapshots:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  chunkify@5.0.0: {}
 
   ci-info@3.9.0: {}
 
@@ -6336,6 +6407,10 @@ snapshots:
       es-errors: 1.3.0
       typed-array-buffer: 1.0.2
       typed-array-byte-offset: 1.0.2
+
+  typescript-log@2.0.0(tslib@2.6.3):
+    dependencies:
+      tslib: 2.6.3
 
   typescript-parser@2.6.1:
     dependencies:
