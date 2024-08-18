@@ -3,6 +3,7 @@ import { inject } from '@adonisjs/core'
 import StripeService, { stripe, webhookSecret } from '#services/stripe_service'
 import UserService from '#services/user_service'
 import Stripe from 'stripe'
+import { cache } from '#config/cache'
 
 @inject()
 export default class StripeController {
@@ -90,7 +91,10 @@ export default class StripeController {
   }
 
   async getProducts({ response }: HttpContext) {
-    const products = await this.stripeService.getPlans()
+    const products = await cache.getOrSet(
+      'products',
+      async () => await this.stripeService.getPlans()
+    )
 
     return response.status(200).send(products)
   }
@@ -101,7 +105,10 @@ export default class StripeController {
 
     if (!user.customerId) return response.status(201).send({ data: [] })
 
-    const invoices = await this.stripeService.getInvoices(user.customerId)
+    const invoices = await cache.getOrSet(`invoices:${user.customerId}`, async () => {
+      if (!user.customerId) return []
+      return await this.stripeService.getInvoices(user.customerId)
+    })
 
     return response.status(200).send(invoices)
   }
