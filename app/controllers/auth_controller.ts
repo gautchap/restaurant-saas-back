@@ -1,6 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import {
-  // createUserMailValidator,
   createUserValidator,
   readUserValidator,
   signUpConfirmationValidator,
