@@ -1,18 +1,24 @@
-FROM node:20.12.2-alpine3.18 AS base
+FROM node:20.17.0-alpine AS base
 
-RUN npm install pm2 -g
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+RUN pnpm add pm2 -g
 
 # All deps stage
 FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-ADD package.json package-lock.json ./
-RUN npm ci
+ADD package.json pnpm-lock.yaml ./
+RUN pnpm i --frozen-lockfile
+
 
 # Production only deps stage
 FROM base AS production-deps
 WORKDIR /app
-ADD package.json package-lock.json ./
-RUN npm ci --omit=dev
+ADD package.json pnpm-lock.yaml ./
+RUN pnpm i --frozen-lockfile --prod
 
 # Build stage
 FROM base AS build
