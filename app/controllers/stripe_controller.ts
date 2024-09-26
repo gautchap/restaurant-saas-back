@@ -103,7 +103,7 @@ export default class StripeController {
     const user = await auth.authenticate()
     if (!user) return response.status(401).send('Unauthorized')
 
-    if (!user.customerId) return response.status(204).send({ data: [] })
+    if (!user.customerId) return response.status(200).send({ data: [] })
 
     const invoices = await cache.getOrSet(`invoices:${user.customerId}`, async () => {
       if (!user.customerId) return []
