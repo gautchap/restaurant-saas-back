@@ -19,6 +19,7 @@ FROM base AS production-deps
 WORKDIR /app
 ADD package.json pnpm-lock.yaml ./
 RUN pnpm i --frozen-lockfile --prod
+RUN wget https://gobinaries.com/tj/node-prune --output-document - | /bin/sh && node-prune
 
 # Build stage
 FROM base AS build
