@@ -14,6 +14,10 @@ export const cache = new BentoCache({
           pruneInterval: false,
         })
       )
-      .useBus(redisBusDriver({ connection: { host: 'redis-server-cache', port: 6379 } })),
+      .useBus(
+        redisBusDriver({
+          connection: { host: 'redis-server-cache', port: 6379, keyPrefix: 'adonis:' },
+        })
+      ),
   },
 })
