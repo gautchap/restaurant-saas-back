@@ -1,6 +1,7 @@
 import { BentoCache, bentostore } from 'bentocache'
 import { fileDriver } from 'bentocache/drivers/file'
 import { memoryDriver } from 'bentocache/drivers/memory'
+import { redisBusDriver } from 'bentocache/drivers/redis'
 
 export const cache = new BentoCache({
   default: 'multiLayer',
@@ -12,6 +13,7 @@ export const cache = new BentoCache({
           directory: './.cache',
           pruneInterval: false,
         })
-      ),
+      )
+      .useBus(redisBusDriver({ connection: { host: 'redis-server-cache', port: 6379 } })),
   },
 })

@@ -26,6 +26,7 @@ services:
       EMAIL_FROM: ${EMAIL_FROM}
     depends_on:
       - postgres
+      - redis-server-cache
     ports:
       - ${PORT}:${PORT}
     networks:
@@ -50,6 +51,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - restaurant-network
+  redis-server-cache:
+    image: redis/redis-stack-server:7.4.0-v0
+    container_name: redis-server-cache
+    hostname: redis-server-cache
+    ports:
+      - 6379:6379
+      - 8001:8001
     networks:
       - restaurant-network
 volumes:

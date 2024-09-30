@@ -25,7 +25,7 @@ importers:
         version: 9.2.2(@adonisjs/core@6.14.0(@adonisjs/assembler@7.8.2(typescript@5.4.5))(@vinejs/vine@2.1.0)(edge.js@6.2.0))(@types/luxon@3.4.2)(@types/node@20.16.9)(dayjs@1.11.13)(edge.js@6.2.0)(luxon@3.5.0)
       '@adonisjs/transmit':
         specifier: ^1.0.2
-        version: 1.0.2(@adonisjs/core@6.14.0(@adonisjs/assembler@7.8.2(typescript@5.4.5))(@vinejs/vine@2.1.0)(edge.js@6.2.0))
+        version: 1.0.2(@adonisjs/core@6.14.0(@adonisjs/assembler@7.8.2(typescript@5.4.5))(@vinejs/vine@2.1.0)(edge.js@6.2.0))(ioredis@5.4.1)
       '@vinejs/vine':
         specifier: ^2.1.0
         version: 2.1.0
@@ -34,7 +34,10 @@ importers:
         version: 3.63.0
       bentocache:
         specifier: 1.0.0-beta.9
-        version: 1.0.0-beta.9(knex@3.1.0(pg@8.13.0))(tslib@2.7.0)
+        version: 1.0.0-beta.9(ioredis@5.4.1)(knex@3.1.0(pg@8.13.0))(tslib@2.7.0)
+      ioredis:
+        specifier: ^5.4.1
+        version: 5.4.1
       luxon:
         specifier: ^3.4.4
         version: 3.5.0
@@ -395,6 +398,9 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
+
+  '@ioredis/commands@1.2.0':
+    resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}
 
   '@japa/api-client@2.0.3':
     resolution: {integrity: sha512-2Eh68Kg1+7glMo+mLSPfBGN21wUEA61niTMwdmhEXyw5VrS4IctZxQWhn5fzwj5KnQJfPpxrRnt9432Zs0uN/g==}
@@ -1101,6 +1107,10 @@ packages:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
 
+  cluster-key-slot@1.1.2:
+    resolution: {integrity: sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA==}
+    engines: {node: '>=0.10.0'}
+
   code-block-writer@13.0.2:
     resolution: {integrity: sha512-XfXzAGiStXSmCIwrkdfvc7FS5Dtj8yelCtyOf2p2skCAfvLd6zu0rGzuS9NSCO3bq1JKpFZ7tbKdKlcd5occQA==}
 
@@ -1277,6 +1287,10 @@ packages:
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
+
+  denque@2.1.0:
+    resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
+    engines: {node: '>=0.10'}
 
   depd@2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
@@ -1875,6 +1889,10 @@ packages:
     resolution: {integrity: sha512-Ju0Bz/cEia55xDwUWEa8+olFpCiQoypjnQySseKtmjNrnps3P+xfpUmGr90T7yjlVJmOtybRvPXhKMbHr+fWnw==}
     engines: {node: '>= 0.10'}
 
+  ioredis@5.4.1:
+    resolution: {integrity: sha512-2YZsvl7jopIa1gaePkeMtd9rAcSjOOjPtpcLlOeusyO+XH2SK5ZcT+UCrElPP+WVIInh2TzeI4XW9ENaSLVVHA==}
+    engines: {node: '>=12.22.0'}
+
   ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
@@ -2164,11 +2182,17 @@ packages:
   lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
+  lodash.defaults@4.2.0:
+    resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
+
   lodash.flatten@4.4.0:
     resolution: {integrity: sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==}
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+
+  lodash.isarguments@3.1.0:
+    resolution: {integrity: sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg==}
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
@@ -2711,6 +2735,14 @@ packages:
     resolution: {integrity: sha512-/vxpCXddiX8NGfGO/mTafwjq4aFa/71pvamip0++IQk3zG8cbCj0fifNPrjjF1XMXUne91jL9OoxmdykoEtifQ==}
     engines: {node: '>= 10.13.0'}
 
+  redis-errors@1.2.0:
+    resolution: {integrity: sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==}
+    engines: {node: '>=4'}
+
+  redis-parser@3.0.0:
+    resolution: {integrity: sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A==}
+    engines: {node: '>=4'}
+
   reflect-metadata@0.2.2:
     resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
 
@@ -2917,6 +2949,9 @@ packages:
 
   stacktracey@2.1.8:
     resolution: {integrity: sha512-Kpij9riA+UNg7TnphqjH7/CzctQ/owJGNbFkfEeve4Z4uxT5+JapVLFXcsurIfN34gnTWZNJ/f7NMG0E8JDzTw==}
+
+  standard-as-callback@2.1.0:
+    resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
 
   statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
@@ -3569,10 +3604,10 @@ snapshots:
       '@poppinss/colors': 4.1.3
       string-width: 7.2.0
 
-  '@adonisjs/transmit@1.0.2(@adonisjs/core@6.14.0(@adonisjs/assembler@7.8.2(typescript@5.4.5))(@vinejs/vine@2.1.0)(edge.js@6.2.0))':
+  '@adonisjs/transmit@1.0.2(@adonisjs/core@6.14.0(@adonisjs/assembler@7.8.2(typescript@5.4.5))(@vinejs/vine@2.1.0)(edge.js@6.2.0))(ioredis@5.4.1)':
     dependencies:
       '@adonisjs/core': 6.14.0(@adonisjs/assembler@7.8.2(typescript@5.4.5))(@vinejs/vine@2.1.0)(edge.js@6.2.0)
-      '@boringnode/bus': 0.5.0
+      '@boringnode/bus': 0.5.0(ioredis@5.4.1)
       '@poppinss/matchit': 3.1.2
       '@poppinss/utils': 6.8.3
       emittery: 1.0.3
@@ -3623,17 +3658,21 @@ snapshots:
       js-tokens: 4.0.0
       picocolors: 1.1.0
 
-  '@boringnode/bus@0.5.0':
+  '@boringnode/bus@0.5.0(ioredis@5.4.1)':
     dependencies:
       '@paralleldrive/cuid2': 2.2.2
       '@poppinss/utils': 6.8.3
       object-hash: 3.0.0
+    optionalDependencies:
+      ioredis: 5.4.1
 
-  '@boringnode/bus@0.6.0':
+  '@boringnode/bus@0.6.0(ioredis@5.4.1)':
     dependencies:
       '@paralleldrive/cuid2': 2.2.2
       '@poppinss/utils': 6.8.3
       object-hash: 3.0.0
+    optionalDependencies:
+      ioredis: 5.4.1
 
   '@chevrotain/cst-dts-gen@11.0.3':
     dependencies:
@@ -3695,6 +3734,8 @@ snapshots:
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/object-schema@2.0.3': {}
+
+  '@ioredis/commands@1.2.0': {}
 
   '@japa/api-client@2.0.3(@japa/assert@3.0.0(@japa/runner@3.1.4)(openapi-types@1.3.4))(@japa/runner@3.1.4)':
     dependencies:
@@ -4295,9 +4336,9 @@ snapshots:
     dependencies:
       safe-buffer: 5.1.2
 
-  bentocache@1.0.0-beta.9(knex@3.1.0(pg@8.13.0))(tslib@2.7.0):
+  bentocache@1.0.0-beta.9(ioredis@5.4.1)(knex@3.1.0(pg@8.13.0))(tslib@2.7.0):
     dependencies:
-      '@boringnode/bus': 0.6.0
+      '@boringnode/bus': 0.6.0(ioredis@5.4.1)
       '@poppinss/utils': 6.8.3
       async-mutex: 0.5.0
       chunkify: 5.0.0
@@ -4306,6 +4347,7 @@ snapshots:
       p-timeout: 6.1.2
       typescript-log: 2.0.0(tslib@2.7.0)
     optionalDependencies:
+      ioredis: 5.4.1
       knex: 3.1.0(pg@8.13.0)
     transitivePeerDependencies:
       - tslib
@@ -4476,6 +4518,8 @@ snapshots:
 
   clone@2.1.2: {}
 
+  cluster-key-slot@1.1.2: {}
+
   code-block-writer@13.0.2: {}
 
   color-convert@1.9.3:
@@ -4629,6 +4673,8 @@ snapshots:
       object-keys: 1.1.1
 
   delayed-stream@1.0.0: {}
+
+  denque@2.1.0: {}
 
   depd@2.0.0: {}
 
@@ -5290,6 +5336,20 @@ snapshots:
 
   interpret@2.2.0: {}
 
+  ioredis@5.4.1:
+    dependencies:
+      '@ioredis/commands': 1.2.0
+      cluster-key-slot: 1.1.2
+      debug: 4.3.7
+      denque: 2.1.0
+      lodash.defaults: 4.2.0
+      lodash.isarguments: 3.1.0
+      redis-errors: 1.2.0
+      redis-parser: 3.0.0
+      standard-as-callback: 2.1.0
+    transitivePeerDependencies:
+      - supports-color
+
   ipaddr.js@1.9.1: {}
 
   is-array-buffer@3.0.4:
@@ -5554,9 +5614,13 @@ snapshots:
 
   lodash-es@4.17.21: {}
 
+  lodash.defaults@4.2.0: {}
+
   lodash.flatten@4.4.0: {}
 
   lodash.get@4.4.2: {}
+
+  lodash.isarguments@3.1.0: {}
 
   lodash.isequal@4.5.0: {}
 
@@ -6066,6 +6130,12 @@ snapshots:
     dependencies:
       resolve: 1.22.8
 
+  redis-errors@1.2.0: {}
+
+  redis-parser@3.0.0:
+    dependencies:
+      redis-errors: 1.2.0
+
   reflect-metadata@0.2.2: {}
 
   regexp-tree@0.1.27: {}
@@ -6262,6 +6332,8 @@ snapshots:
     dependencies:
       as-table: 1.0.55
       get-source: 2.0.12
+
+  standard-as-callback@2.1.0: {}
 
   statuses@2.0.1: {}
 
