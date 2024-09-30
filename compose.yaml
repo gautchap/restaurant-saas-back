@@ -2,6 +2,8 @@ services:
   server:
     build:
       context: .
+    container_name: restaurant-server
+    hostname: restaurant-server
     environment:
       TZ: ${TZ}
       PORT: ${PORT}
@@ -22,13 +24,17 @@ services:
       SMTP_PORT: ${SMTP_PORT}
       EMAIL_NAME: ${EMAIL_NAME}
       EMAIL_FROM: ${EMAIL_FROM}
+    depends_on:
+      - postgres
     ports:
       - ${PORT}:${PORT}
     networks:
       - restaurant-network
   postgres:
     image: postgres:16-alpine
+    container_name: restaurant-postgres
     restart: always
+    user: ${DB_USER}
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
