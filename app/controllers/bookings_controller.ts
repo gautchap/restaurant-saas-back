@@ -3,6 +3,7 @@ import { inject } from '@adonisjs/core'
 import { createBookingValidator, getBookingsValidator } from '#validators/booking_validator'
 import BookingService from '#services/booking_service'
 import transmit from '@adonisjs/transmit/services/main'
+import { cache } from '#config/cache'
 import mail from '@adonisjs/mail/services/main'
 import sendBookingConfirmation from '#resources/views/emails/booking_email'
 
@@ -20,6 +21,9 @@ export default class BookingsController {
 
     transmit.broadcast(`user/${booking.userId}/bookings`, { booking: JSON.stringify(booking) })
 
+    const cachedBooking = cache.namespace('bookings')
+    await cachedBooking.delete(payload.booking.userId)
+
     await mail.send((message) => {
       message
         .to(booking.email)
@@ -36,7 +40,10 @@ export default class BookingsController {
     const data = request.all()
     const payload = await getBookingsValidator.validate(data)
 
-    const bookings = await this.bookingService.getBookings(payload.userId)
+    const bookings = await cache.getOrSet(
+      `bookings:${payload.userId}`,
+      async () => await this.bookingService.getBookings(payload.userId)
+    )
 
     return bookings
   }
@@ -50,6 +57,13 @@ export default class BookingsController {
 
     const booking = await this.bookingService.createBooking(payload.booking)
 
-    return booking
+    response.status(200).send(booking)
+
+    transmit.broadcast(`user/${booking.userId}/bookings/update`, {
+      booking: JSON.stringify(booking),
+    })
+
+    const cachedBooking = cache.namespace('bookings')
+    await cachedBooking.delete(user.id)
   }
 }
