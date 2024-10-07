@@ -22,7 +22,7 @@ export default class StripeService {
       })
     }
 
-    const parsedProducts = await productsValidator.validate(products)
+    const parsedProducts = await productsValidator.validate({ products })
 
     return parsedProducts
   }

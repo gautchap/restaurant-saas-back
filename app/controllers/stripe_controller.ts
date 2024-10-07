@@ -42,7 +42,7 @@ export default class StripeController {
 
         const plans = await this.stripeService.getPlans()
 
-        const plan = plans.find((_plan) => _plan.priceId === priceId)
+        const plan = plans.products.find((_plan) => _plan.priceId === priceId)
 
         if (!plan) break
         if (!customer.email) throw new Error('No email provided')
