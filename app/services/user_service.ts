@@ -97,14 +97,10 @@ export default class UserService {
     return user
   }
 
-  async signOutUser({
-    user,
-  }: {
-    user: User & {
-      currentAccessToken: AccessToken
-    }
-  }) {
-    const signOut = await User.accessTokens.delete(user, user.currentAccessToken.identifier)
+  async signOutUser({ userId, token }: { userId: User['id']; token: AccessToken }) {
+    const user = await User.findBy('id', userId)
+    if (!user) return 'User not found'
+    const signOut = await User.accessTokens.delete(user, token.identifier)
 
     return signOut
   }

@@ -67,7 +67,10 @@ export default class AuthController {
 
     if (!user) return response.status(401).send('Unauthorized')
 
-    const signOut = await this.userService.signOutUser({ user })
+    const signOut = await this.userService.signOutUser({
+      userId: user.id,
+      token: user.currentAccessToken,
+    })
 
     return signOut
   }
