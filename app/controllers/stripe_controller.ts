@@ -96,7 +96,7 @@ export default class StripeController {
       async () => await this.stripeService.getPlans()
     )
 
-    return response.status(200).send(products)
+    return response.status(200).send(products.products)
   }
 
   async getInvoices({ response, auth }: HttpContext) {
